@@ -20,7 +20,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
-              Servicio de Arquitectura y Construcción. Más de 20 años
+              Servicio de Arquitectura y Construcción. Más de 30 años
               de experiencia y en el mismo lugar. 100% garantizado.
             </p>
           </div>
@@ -78,7 +78,14 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <p>Av. San Pablo N° 8426, Of. 14<br />Pudahuel, Santiago</p>
+                <a
+                  href="https://maps.google.com/?q=Av+San+Pablo+8426+Of+14+Pudahuel+Santiago+Chile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Av. San Pablo N° 8426, Of. 14<br />Pudahuel, Santiago
+                </a>
               </li>
             </ul>
           </div>

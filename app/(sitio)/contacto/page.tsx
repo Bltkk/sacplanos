@@ -93,12 +93,14 @@ export default function ContactoPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-gray-900">Dirección</h3>
-                    <p className="text-brand-gray-text text-sm mt-1">
-                      Av. San Pablo N° 8426, Of. 14
-                    </p>
-                    <p className="text-brand-gray-text text-sm">
-                      Pudahuel, Santiago
-                    </p>
+                    <a
+                      href="https://maps.google.com/?q=Av+San+Pablo+8426+Of+14+Pudahuel+Santiago+Chile"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-brand-gray-text text-sm mt-1 hover:text-brand-blue transition-colors block"
+                    >
+                      Av. San Pablo N° 8426, Of. 14<br />Pudahuel, Santiago
+                    </a>
                   </div>
                 </div>
 

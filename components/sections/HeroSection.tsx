@@ -11,7 +11,7 @@ export default function HeroSection() {
             Servicio de Arquitectura y Construcción
           </span>
           <h1 className="font-display text-4xl sm:text-5xl text-white mt-4 leading-tight">
-            20 años de experiencia y en el mismo lugar
+            30 años de experiencia y en el mismo lugar
           </h1>
           <p className="text-white/70 mt-6 leading-relaxed">
             Regularice su propiedad o construya su proyecto con Empresa SAC Ltda.

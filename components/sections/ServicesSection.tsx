@@ -28,7 +28,7 @@ export default function ServicesSection() {
             Soluciones integrales en arquitectura y construcción
           </h2>
           <p className="text-brand-gray-text text-lg mt-5 max-w-3xl mx-auto">
-            Más de 20 años de experiencia y en el mismo lugar.
+            Más de 30 años de experiencia y en el mismo lugar.
             Ofrecemos un servicio completo, 100% garantizado.
           </p>
         </div>
