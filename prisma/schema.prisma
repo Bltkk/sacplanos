@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// Contactos recibidos desde el formulario web
+model Contacto {
+  id         String   @id @default(cuid())
+  nombre     String   @db.VarChar(80)
+  email      String   @db.VarChar(255)
+  telefono   String?  @db.VarChar(20)
+  proyecto   String   @db.VarChar(200)
+  mensaje    String   @db.Text
+  ip         String   @db.VarChar(45)
+  leido      Boolean  @default(false)
+  respondido Boolean  @default(false)
+  fecha      DateTime @default(now())
+
+  @@map("contactos")
+}

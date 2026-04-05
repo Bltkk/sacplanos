@@ -1,23 +1,18 @@
 import { NextRequest } from 'next/server';
 import { contactosToCSV } from '@/lib/storage';
+import { env } from '@/lib/env';
 
 // GET — Descargar contactos como archivo CSV (se abre en Excel)
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get('authorization');
   const password = authHeader?.replace('Bearer ', '');
-  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  // Si no hay contraseña configurada, bloquear siempre
-  if (!adminPassword) {
-    console.error('[admin/csv] ADMIN_PASSWORD no configurada');
+  // Usa env validado — si ADMIN_PASSWORD no existe, el build falla
+  if (password !== env.adminPassword) {
     return Response.json({ error: 'No autorizado' }, { status: 401 });
   }
 
-  if (password !== adminPassword) {
-    return Response.json({ error: 'No autorizado' }, { status: 401 });
-  }
-
-  const csv = contactosToCSV();
+  const csv = await contactosToCSV();
 
   // BOM para que Excel reconozca tildes y ñ correctamente
   const bom = '\uFEFF';
