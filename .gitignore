@@ -3,6 +3,7 @@ node_modules/
 .env.local
 .env*.local
 *.env
-data/
+data/*
+!data/.gitkeep
 .DS_Store
 .claude/
