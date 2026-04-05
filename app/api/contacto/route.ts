@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Guardar en archivo JSON (siempre funciona)
-    saveContacto(result.data, ip);
+    // Guardar en base de datos
+    await saveContacto(result.data, ip);
 
     // Intentar enviar email (opcional, puede fallar si no hay credenciales)
     try {

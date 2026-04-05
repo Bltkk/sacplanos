@@ -1,33 +1,28 @@
 import { NextRequest } from 'next/server';
 import { getContactos, marcarLeido, toggleRespondido, eliminarContacto } from '@/lib/storage';
+import { env } from '@/lib/env';
 
 // Intentos fallidos por IP para rate limit manual (en memoria)
 const intentosFallidos = new Map<string, { count: number; blockedUntil: number }>();
 
-// Verificar contraseña admin — sin fallback débil
-function isAuthorized(req: NextRequest): { ok: boolean; bloqueado?: boolean } {
+// Verificar contraseña admin
+function isAuthorized(req: NextRequest): { ok: boolean; bloqueado?: boolean; motivo?: string } {
   const ip = req.headers.get('x-forwarded-for') ?? 'anonymous';
   const ahora = Date.now();
 
   // Verificar si la IP está bloqueada
   const intentos = intentosFallidos.get(ip);
   if (intentos && intentos.blockedUntil > ahora) {
-    return { ok: false, bloqueado: true };
+    return { ok: false, bloqueado: true, motivo: 'IP bloqueada por intentos fallidos' };
   }
 
   const authHeader = req.headers.get('authorization');
-  if (!authHeader) return { ok: false };
+  if (!authHeader) return { ok: false, motivo: 'Sin header de autorización' };
 
   const password = authHeader.replace('Bearer ', '');
-  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  // Si no hay contraseña configurada, bloquear siempre
-  if (!adminPassword) {
-    console.error('[admin] ADMIN_PASSWORD no configurada en variables de entorno');
-    return { ok: false };
-  }
-
-  const esValida = password === adminPassword;
+  // Comparación segura usando env validado (falla en build si no existe)
+  const esValida = password === env.adminPassword;
 
   if (!esValida) {
     // Registrar intento fallido — bloquear por 15 min tras 5 intentos
@@ -60,7 +55,7 @@ export async function GET(req: NextRequest) {
     return Response.json({ error: 'No autorizado' }, { status: 401 });
   }
 
-  const contactos = getContactos();
+  const contactos = await getContactos();
   const noLeidos = contactos.filter((c) => !c.leido).length;
   const sinResponder = contactos.filter((c) => !c.respondido).length;
 
@@ -94,14 +89,14 @@ export async function PATCH(req: NextRequest) {
   const accion = body.accion || 'leido';
 
   if (accion === 'respondido') {
-    const nuevoEstado = toggleRespondido(body.id);
+    const nuevoEstado = await toggleRespondido(body.id);
     if (nuevoEstado === null) {
       return Response.json({ error: 'Contacto no encontrado' }, { status: 404 });
     }
     return Response.json({ ok: true, respondido: nuevoEstado });
   }
 
-  const ok = marcarLeido(body.id);
+  const ok = await marcarLeido(body.id);
   if (!ok) {
     return Response.json({ error: 'Contacto no encontrado' }, { status: 404 });
   }
@@ -133,7 +128,7 @@ export async function DELETE(req: NextRequest) {
     return Response.json({ error: 'ID requerido' }, { status: 400 });
   }
 
-  const ok = eliminarContacto(body.id);
+  const ok = await eliminarContacto(body.id);
   if (!ok) {
     return Response.json({ error: 'Contacto no encontrado' }, { status: 404 });
   }

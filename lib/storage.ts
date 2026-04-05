@@ -1,91 +1,79 @@
-import fs from 'fs';
-import path from 'path';
+import { prisma } from './prisma';
 import type { ContactFormData } from '@/schemas/contact';
 
-// Ruta al archivo JSON donde se guardan los contactos
-const DATA_DIR = path.join(process.cwd(), 'data');
-const DATA_FILE = path.join(DATA_DIR, 'contactos.json');
-
-export interface ContactRecord extends ContactFormData {
+// Tipo exportado para usar en las API routes y el admin
+export interface ContactRecord {
   id: string;
-  fecha: string;
+  nombre: string;
+  email: string;
+  telefono: string | null;
+  proyecto: string;
+  mensaje: string;
   ip: string;
   leido: boolean;
   respondido: boolean;
-}
-
-// Asegurar que el directorio y archivo existan
-function ensureDataFile() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(DATA_FILE)) {
-    fs.writeFileSync(DATA_FILE, '[]', 'utf-8');
-  }
-}
-
-// Leer todos los contactos
-export function getContactos(): ContactRecord[] {
-  ensureDataFile();
-  const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-  return JSON.parse(raw) as ContactRecord[];
+  fecha: Date;
 }
 
 // Guardar un nuevo contacto
-export function saveContacto(data: ContactFormData, ip: string): ContactRecord {
-  const contactos = getContactos();
+export async function saveContacto(data: ContactFormData, ip: string): Promise<ContactRecord> {
+  return prisma.contacto.create({
+    data: {
+      nombre: data.nombre,
+      email: data.email,
+      telefono: data.telefono || null,
+      proyecto: data.proyecto,
+      mensaje: data.mensaje,
+      ip,
+    },
+  });
+}
 
-  const record: ContactRecord = {
-    ...data,
-    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-    fecha: new Date().toISOString(),
-    ip,
-    leido: false,
-    respondido: false,
-  };
-
-  contactos.unshift(record); // Más reciente primero
-  fs.writeFileSync(DATA_FILE, JSON.stringify(contactos, null, 2), 'utf-8');
-
-  return record;
+// Obtener todos los contactos (más recientes primero)
+export async function getContactos(): Promise<ContactRecord[]> {
+  return prisma.contacto.findMany({
+    orderBy: { fecha: 'desc' },
+  });
 }
 
 // Marcar contacto como leído
-export function marcarLeido(id: string): boolean {
-  const contactos = getContactos();
-  const contacto = contactos.find((c) => c.id === id);
-  if (!contacto) return false;
+export async function marcarLeido(id: string): Promise<boolean> {
+  try {
+    await prisma.contacto.update({
+      where: { id },
+      data: { leido: true },
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
-  contacto.leido = true;
-  fs.writeFileSync(DATA_FILE, JSON.stringify(contactos, null, 2), 'utf-8');
-  return true;
+// Cambiar estado de respondido (toggle)
+export async function toggleRespondido(id: string): Promise<boolean | null> {
+  const contacto = await prisma.contacto.findUnique({ where: { id } });
+  if (!contacto) return null;
+
+  const updated = await prisma.contacto.update({
+    where: { id },
+    data: { respondido: !contacto.respondido },
+  });
+  return updated.respondido;
 }
 
 // Eliminar un contacto por ID
-export function eliminarContacto(id: string): boolean {
-  const contactos = getContactos();
-  const index = contactos.findIndex((c) => c.id === id);
-  if (index === -1) return false;
-
-  contactos.splice(index, 1);
-  fs.writeFileSync(DATA_FILE, JSON.stringify(contactos, null, 2), 'utf-8');
-  return true;
-}
-
-// Cambiar estado de respondido
-export function toggleRespondido(id: string): boolean | null {
-  const contactos = getContactos();
-  const contacto = contactos.find((c) => c.id === id);
-  if (!contacto) return null;
-
-  contacto.respondido = !contacto.respondido;
-  fs.writeFileSync(DATA_FILE, JSON.stringify(contactos, null, 2), 'utf-8');
-  return contacto.respondido;
+export async function eliminarContacto(id: string): Promise<boolean> {
+  try {
+    await prisma.contacto.delete({ where: { id } });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // Exportar contactos a formato CSV con separador punto y coma (Excel lo lee mejor)
-export function contactosToCSV(): string {
-  const contactos = getContactos();
+export async function contactosToCSV(): Promise<string> {
+  const contactos = await getContactos();
   const sep = ';';
   const headers = ['Fecha', 'Nombre', 'Email', 'Telefono', 'Tipo de Proyecto', 'Mensaje', 'Leido', 'Respondido'];
 
@@ -104,13 +92,12 @@ export function contactosToCSV(): string {
 }
 
 // Formatear fecha para CSV
-function formatFechaCSV(iso: string): string {
-  const d = new Date(iso);
-  const dia = String(d.getDate()).padStart(2, '0');
-  const mes = String(d.getMonth() + 1).padStart(2, '0');
-  const anio = d.getFullYear();
-  const hora = String(d.getHours()).padStart(2, '0');
-  const min = String(d.getMinutes()).padStart(2, '0');
+function formatFechaCSV(date: Date): string {
+  const dia = String(date.getDate()).padStart(2, '0');
+  const mes = String(date.getMonth() + 1).padStart(2, '0');
+  const anio = date.getFullYear();
+  const hora = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
   return `${dia}/${mes}/${anio} ${hora}:${min}`;
 }
 
