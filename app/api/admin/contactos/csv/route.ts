@@ -5,8 +5,15 @@ import { contactosToCSV } from '@/lib/storage';
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get('authorization');
   const password = authHeader?.replace('Bearer ', '');
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (password !== (process.env.ADMIN_PASSWORD || 'admin123')) {
+  // Si no hay contraseña configurada, bloquear siempre
+  if (!adminPassword) {
+    console.error('[admin/csv] ADMIN_PASSWORD no configurada');
+    return Response.json({ error: 'No autorizado' }, { status: 401 });
+  }
+
+  if (password !== adminPassword) {
     return Response.json({ error: 'No autorizado' }, { status: 401 });
   }
 

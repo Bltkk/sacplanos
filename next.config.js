@@ -11,6 +11,12 @@ const nextConfig = {
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },
+  // Limitar imágenes solo al dominio propio (mitiga DoS en Image Optimizer)
+  images: {
+    remotePatterns: [],
+    minimumCacheTTL: 60,
+  },
+  // No usar rewrites (mitiga HTTP request smuggling)
 };
 
 module.exports = nextConfig;
