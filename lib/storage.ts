@@ -61,6 +61,17 @@ export function marcarLeido(id: string): boolean {
   return true;
 }
 
+// Eliminar un contacto por ID
+export function eliminarContacto(id: string): boolean {
+  const contactos = getContactos();
+  const index = contactos.findIndex((c) => c.id === id);
+  if (index === -1) return false;
+
+  contactos.splice(index, 1);
+  fs.writeFileSync(DATA_FILE, JSON.stringify(contactos, null, 2), 'utf-8');
+  return true;
+}
+
 // Cambiar estado de respondido
 export function toggleRespondido(id: string): boolean | null {
   const contactos = getContactos();

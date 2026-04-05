@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { getContactos, marcarLeido, toggleRespondido } from '@/lib/storage';
+import { getContactos, marcarLeido, toggleRespondido, eliminarContacto } from '@/lib/storage';
 
 // Intentos fallidos por IP para rate limit manual (en memoria)
 const intentosFallidos = new Map<string, { count: number; blockedUntil: number }>();
@@ -102,6 +102,38 @@ export async function PATCH(req: NextRequest) {
   }
 
   const ok = marcarLeido(body.id);
+  if (!ok) {
+    return Response.json({ error: 'Contacto no encontrado' }, { status: 404 });
+  }
+
+  return Response.json({ ok: true });
+}
+
+// DELETE — Eliminar un contacto
+export async function DELETE(req: NextRequest) {
+  const auth = isAuthorized(req);
+  if (auth.bloqueado) {
+    return Response.json(
+      { error: 'Demasiados intentos fallidos. Espera 15 minutos.' },
+      { status: 429 }
+    );
+  }
+  if (!auth.ok) {
+    return Response.json({ error: 'No autorizado' }, { status: 401 });
+  }
+
+  let body: { id?: string };
+  try {
+    body = await req.json();
+  } catch {
+    return Response.json({ error: 'Formato inválido' }, { status: 400 });
+  }
+
+  if (!body.id) {
+    return Response.json({ error: 'ID requerido' }, { status: 400 });
+  }
+
+  const ok = eliminarContacto(body.id);
   if (!ok) {
     return Response.json({ error: 'Contacto no encontrado' }, { status: 404 });
   }

@@ -80,6 +80,23 @@ export default function AdminPage() {
     fetchContactos();
   }
 
+  // Eliminar contacto con confirmación
+  async function handleEliminar(id: string, nombre: string) {
+    if (!confirm(`¿Eliminar la cotización de "${nombre}"? Esta acción no se puede deshacer.`)) return;
+
+    await fetch('/api/admin/contactos', {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${password}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+
+    setSelectedId(null);
+    fetchContactos();
+  }
+
   // Cambiar estado respondido / no respondido
   async function handleToggleRespondido(id: string) {
     await fetch('/api/admin/contactos', {
@@ -329,6 +346,12 @@ export default function AdminPage() {
                       }`}
                     >
                       {selected.respondido ? '✓ Marcado como respondido' : 'Marcar como respondido'}
+                    </button>
+                    <button
+                      onClick={() => handleEliminar(selected.id, selected.nombre)}
+                      className="text-xs tracking-widest uppercase px-6 py-3 border border-gray-300 text-gray-400 hover:bg-red-50 hover:border-red-400 hover:text-red-600 transition-colors ml-auto"
+                    >
+                      Eliminar
                     </button>
                   </div>
                 </div>
