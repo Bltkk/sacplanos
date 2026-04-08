@@ -55,11 +55,19 @@ export async function GET(req: NextRequest) {
     return Response.json({ error: 'No autorizado' }, { status: 401 });
   }
 
-  const contactos = await getContactos();
-  const noLeidos = contactos.filter((c) => !c.leido).length;
-  const sinResponder = contactos.filter((c) => !c.respondido).length;
+  try {
+    const contactos = await getContactos();
+    const noLeidos = contactos.filter((c) => !c.leido).length;
+    const sinResponder = contactos.filter((c) => !c.respondido).length;
 
-  return Response.json({ contactos, total: contactos.length, noLeidos, sinResponder });
+    return Response.json({ contactos, total: contactos.length, noLeidos, sinResponder });
+  } catch (err) {
+    console.error('[admin] Error al obtener contactos:', err);
+    return Response.json(
+      { error: 'Error al conectar con la base de datos.', detalle: String(err) },
+      { status: 500 }
+    );
+  }
 }
 
 // PATCH — Marcar como leído o cambiar estado de respondido

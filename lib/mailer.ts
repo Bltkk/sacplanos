@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: env.gmailUser,
-    pass: env.gmailPass, // App Password, NO la contraseña real
+    pass: env.gmailPass.replace(/\s/g, ''), // App Password sin espacios (Google los muestra con espacios pero SMTP los rechaza)
   },
 });
 

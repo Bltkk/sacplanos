@@ -30,25 +30,31 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // 1. Enviar email — acción principal y crítica
   try {
-    // Guardar en base de datos
-    await saveContacto(result.data, ip);
-
-    // Intentar enviar email (opcional, puede fallar si no hay credenciales)
-    try {
-      const { sendContactEmail } = await import('@/lib/mailer');
-      await sendContactEmail(result.data);
-    } catch (emailErr) {
-      // Si el email falla, no es crítico — el contacto ya quedó guardado
-      console.warn('[contacto] Email no enviado (credenciales no configuradas):', emailErr);
-    }
-
-    return Response.json({ ok: true });
-  } catch (err) {
-    console.error('[contacto] Error guardando contacto:', err);
+    const { sendContactEmail } = await import('@/lib/mailer');
+    await sendContactEmail(result.data);
+  } catch (emailErr) {
+    console.error('[contacto] Error enviando email:', emailErr);
     return Response.json(
       { error: 'Error al enviar. Intenta de nuevo o contáctanos directamente.' },
       { status: 500 }
     );
   }
+
+  // 2. Guardar en base de datos — secundario, no bloquea la respuesta
+  try {
+    await saveContacto(result.data, ip);
+    console.log('[contacto] Guardado en BD exitosamente');
+  } catch (dbErr) {
+    // Si la BD falla, el email ya se envió — logueamos con detalle para diagnosticar
+    console.error('[contacto] ERROR al guardar en BD (email sí enviado):', {
+      error: String(dbErr),
+      stack: dbErr instanceof Error ? dbErr.stack : undefined,
+      platform: process.platform,
+      arch: process.arch,
+    });
+  }
+
+  return Response.json({ ok: true });
 }
