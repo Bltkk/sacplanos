@@ -1,3 +1,6 @@
+// Archivo deshabilitado — base de datos eliminada
+// Las cotizaciones se envían únicamente por email
+export {};
 import { prisma } from './prisma';
 import type { ContactFormData } from '@/schemas/contact';
 
