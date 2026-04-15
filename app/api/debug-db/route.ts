@@ -1,3 +1,7 @@
+// Ruta deshabilitada — base de datos eliminada
+export async function GET() {
+  return Response.json({ error: 'Ruta no disponible' }, { status: 404 });
+}
 import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { env } from '@/lib/env';
