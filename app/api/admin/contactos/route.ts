@@ -1,3 +1,7 @@
+// Ruta deshabilitada — base de datos eliminada
+export async function GET() {
+  return Response.json({ error: 'Ruta no disponible' }, { status: 404 });
+}
 import { NextRequest } from 'next/server';
 import { getContactos, marcarLeido, toggleRespondido, eliminarContacto } from '@/lib/storage';
 import { env } from '@/lib/env';
