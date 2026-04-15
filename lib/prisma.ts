@@ -1,3 +1,5 @@
+// Archivo deshabilitado — base de datos eliminada
+export {};
 import { PrismaClient } from '@prisma/client';
 
 // Evitar múltiples instancias en desarrollo (hot reload crea conexiones nuevas)
