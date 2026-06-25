@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: '%s | SAC Planos',
   },
   description:
-    'Más de 30 años elaborando planos, permisos de edificación y regularización de obras en Chile. Precisión técnica en cada proyecto.',
+    'Desde 1989 elaborando planos, permisos de edificación y regularización de obras en Chile. Precisión técnica en cada proyecto.',
   openGraph: {
     type: 'website',
     locale: 'es_CL',

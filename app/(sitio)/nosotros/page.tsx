@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Nosotros',
   description:
-    'Conoce la historia, valores y equipo de SAC Planos. Más de 30 años de experiencia en arquitectura técnica en Chile.',
+    'Conoce la historia, valores y equipo de Empresa SAC. Desde 1989 a su servicio en arquitectura técnica y materias municipales en Chile.',
 };
 
 const valores = [
@@ -31,7 +31,7 @@ const valores = [
   {
     title: 'Experiencia',
     description:
-      'Más de dos décadas resolviendo proyectos de diversa complejidad nos respaldan.',
+      'Desde 1989 resolviendo proyectos de diversa complejidad en distintas comunas nos respaldan.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -82,25 +82,21 @@ export default function NosotrosPage() {
                 Quiénes Somos
               </span>
               <h2 className="font-display text-3xl text-gray-900 mt-3 mb-6">
-                Más de 20 años construyendo confianza
+                Desde 1989 construyendo confianza
               </h2>
               <div className="space-y-4 text-brand-gray-text leading-relaxed">
                 <p>
-                  SAC Planos nació con la misión de simplificar el proceso de
-                  obtención de permisos de edificación en Chile. Desde nuestros
-                  inicios, hemos acompañado a cientos de familias, empresas y
-                  profesionales en la materialización de sus proyectos.
+                  Desde 1989, la empresa SAC es un orientador en materias
+                  municipales, creada para dar soluciones con sus técnicos y
+                  profesionales, quienes están capacitados para crear, proyectar
+                  y construir edificaciones nuevas, remodelaciones y/o
+                  ampliaciones, además de entregar asesorías de diversa índole y
+                  otros servicios más.
                 </p>
                 <p>
-                  Nuestro equipo combina experiencia técnica con un profundo
-                  conocimiento de la normativa chilena, lo que nos permite
-                  ofrecer soluciones eficientes y con alta tasa de aprobación
-                  ante las Direcciones de Obras Municipales.
-                </p>
-                <p>
-                  Hoy, con más de 800 proyectos realizados, seguimos
-                  comprometidos con la misma precisión y dedicación del
-                  primer día.
+                  Contamos con una basta experiencia, es por esto, que ya miles
+                  de personas, de distintas comunas, han acertado y han
+                  depositado su confianza en nosotros.
                 </p>
               </div>
             </div>

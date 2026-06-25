@@ -20,8 +20,8 @@ export default function Footer() {
               />
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
-              Servicio de Arquitectura y Construcción. Más de 30 años
-              de experiencia y en el mismo lugar. 100% garantizado.
+              Servicio de Arquitectura y Construcción. Desde 1989
+              a su servicio y en el mismo lugar. 100% garantizado.
             </p>
           </div>
 
