@@ -56,7 +56,7 @@ export default function NosotrosPage() {
   return (
     <>
       {/* Header de página */}
-      <section className="bg-brand-navy py-16">
+      <section className="bg-brand-navy py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <span className="text-brand-orange text-xs tracking-[0.14em] uppercase font-medium">
             Sobre Nosotros
