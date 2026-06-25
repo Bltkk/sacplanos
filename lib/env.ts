@@ -1,7 +1,6 @@
-// Validación de variables de entorno al arrancar
 const vars = [
-  'GMAIL_USER',
-  'GMAIL_APP_PASSWORD',
+  'SMTP_USER',
+  'SMTP_PASS',
   'EMAIL_TO',
   'NEXT_PUBLIC_SITE_URL',
   'ADMIN_PASSWORD',
@@ -10,15 +9,16 @@ const vars = [
 
 for (const key of vars) {
   if (!process.env[key]) {
-    throw new Error(`[env] Variable de entorno faltante: ${key}`);
+    throw new Error('[env] Variable faltante: ' + key);
   }
 }
 
 export const env = {
-  gmailUser: process.env.GMAIL_USER!,
-  gmailPass: process.env.GMAIL_APP_PASSWORD!,
+  smtpUser: process.env.SMTP_USER!,
+  smtpPass: process.env.SMTP_PASS!,
   emailTo: process.env.EMAIL_TO!,
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL!,
   adminPassword: process.env.ADMIN_PASSWORD!,
   databaseUrl: process.env.DATABASE_URL!,
 };
+

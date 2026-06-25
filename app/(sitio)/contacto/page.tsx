@@ -64,8 +64,7 @@ export default function ContactoPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-gray-900">Teléfonos</h3>
-                    <p className="text-brand-gray-text text-sm mt-1">(+56 2) 2643 6318</p>
-                    <p className="text-brand-gray-text text-sm">(+56 2) 2643 4156</p>
+                    <p className="text-brand-gray-text text-sm mt-1">(+56 2) 2643 4156</p>
                   </div>
                 </div>
 

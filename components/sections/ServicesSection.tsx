@@ -6,6 +6,10 @@ const regularizacion = [
   'Recepción Final',
   'Fusión y Subdivisiones',
   'Proyectos nuevos de viviendas, colegios y comerciales',
+  'Corretaje',
+  'Asesorías eléctricas',
+  'Asesorías sanitarias',
+  'Planos de gas',
 ];
 
 const construccion = [
