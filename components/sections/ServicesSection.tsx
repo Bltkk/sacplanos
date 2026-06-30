@@ -6,11 +6,9 @@ const regularizacion = [
   'Recepción Final',
   'Fusión y Subdivisiones',
   'Proyectos nuevos de viviendas, colegios y comerciales',
-  'Corretaje',
   'Proyectos eléctricos',
   'Proyectos sanitarios',
-  'Planos de gas',
-  'Asesorías mobiliarias',
+  'Proyectos de gas',
 ];
 
 const construccion = [
@@ -18,6 +16,14 @@ const construccion = [
   'Construcciones de colegios y locales comerciales',
   'Remodelaciones',
   'Reparaciones',
+];
+
+const tramitesMunicipales = [
+  'Asesoría mobiliaria',
+  'Corretaje de propiedades',
+  'Tasaciones',
+  'Certificados municipales',
+  'Gestión ante la DOM',
 ];
 
 export default function ServicesSection() {
@@ -39,7 +45,7 @@ export default function ServicesSection() {
         </div>
 
         {/* Dos bloques de servicios */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-brand-gray-mid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-brand-gray-mid">
           {/* Regularice su propiedad */}
           <div className="bg-white p-12 lg:p-16 hover:bg-brand-gray-light transition-colors">
             <div className="text-brand-orange mb-5">
@@ -84,6 +90,34 @@ export default function ServicesSection() {
             </p>
             <ul className="space-y-4">
               {construccion.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-base text-brand-gray-text">
+                  <span className="text-brand-orange mt-1 shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Trámites Municipales */}
+          <div className="bg-white p-12 lg:p-16 hover:bg-brand-gray-light transition-colors">
+            <div className="text-brand-orange mb-5">
+              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="font-display text-3xl text-gray-900 mb-3">
+              Trámites Municipales
+            </h3>
+            <p className="text-brand-gray-text text-base mb-8">
+              Asesoría y gestión completa en trámites inmobiliarios
+              y procedimientos ante organismos municipales.
+            </p>
+            <ul className="space-y-4">
+              {tramitesMunicipales.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-base text-brand-gray-text">
                   <span className="text-brand-orange mt-1 shrink-0">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
