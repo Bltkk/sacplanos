@@ -7,9 +7,10 @@ const regularizacion = [
   'Fusión y Subdivisiones',
   'Proyectos nuevos de viviendas, colegios y comerciales',
   'Corretaje',
-  'Asesorías eléctricas',
-  'Asesorías sanitarias',
+  'Proyectos eléctricos',
+  'Proyectos sanitarios',
   'Planos de gas',
+  'Asesorías mobiliarias',
 ];
 
 const construccion = [
