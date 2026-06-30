@@ -19,7 +19,6 @@ const construccion = [
 ];
 
 const tramitesMunicipales = [
-  'Asesoría mobiliaria',
   'Corretaje de propiedades',
   'Tasaciones',
   'Certificados municipales',
