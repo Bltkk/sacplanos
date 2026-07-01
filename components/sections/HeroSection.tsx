@@ -38,7 +38,7 @@ export default function HeroSection() {
       {/* Lado derecho — imagen corporativa */}
       <div className="bg-brand-gray-light flex items-center justify-center p-0">
         <Image
-          src="/imagen_corporativa.png"
+          src="/imagen_corporativa_hero.png"
           alt="Empresa SAC - Servicio de Arquitectura y Construcción"
           width={800}
           height={600}
