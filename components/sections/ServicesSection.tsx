@@ -23,6 +23,8 @@ const tramitesMunicipales = [
   'Tasaciones',
   'Certificados municipales',
   'Gestión ante la DOM',
+  'Permiso de edificación',
+  'Recepción final',
 ];
 
 export default function ServicesSection() {

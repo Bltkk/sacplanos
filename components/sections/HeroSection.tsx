@@ -14,7 +14,7 @@ export default function HeroSection() {
             Desde 1989 a su servicio y en el mismo lugar
           </h1>
           <p className="text-white/70 mt-6 leading-relaxed">
-            Regularice su propiedad o construya su proyecto con Empresa SAC Ltda.
+            Regularice su propiedad o construya su proyecto con Empresa SAC Spa.
             Planos, permisos de edificación, recepción final, fusiones,
             subdivisiones y construcción. 100% garantizado.
           </p>

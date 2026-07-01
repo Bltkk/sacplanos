@@ -97,7 +97,7 @@ export default function Footer() {
           className="border-t border-white/10 mt-12 pt-8 pb-8 block text-center text-white/40 text-sm tracking-wide hover:text-white/60 transition-colors"
           aria-label="Administración"
         >
-          &copy; {currentYear} Empresa SAC Ltda. Todos los derechos reservados. | www.sacplanos.cl
+          &copy; {currentYear} Empresa SAC Spa. Todos los derechos reservados. | www.sacplanos.cl
         </Link>
       </div>
     </footer>
