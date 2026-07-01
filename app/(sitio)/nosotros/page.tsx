@@ -101,12 +101,12 @@ export default function NosotrosPage() {
                 </p>
               </div>
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden border border-brand-gray-mid">
+            <div className="relative aspect-[4/5] overflow-hidden border border-brand-gray-mid bg-gray-100">
               <Image
                 src="/equipo.png"
                 alt="Equipo SAC Planos"
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
           </div>
